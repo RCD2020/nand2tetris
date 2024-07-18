@@ -1,10 +1,12 @@
-from gate_sim import simulate_function
+from gate_sim import *
 
 from nand import nand
 from Not import Not
 from And import And
 from Xor import Xor
 from Or import Or
+from Mux import Mux
 
 
-simulate_function(Or)
+# simulate_function(Xor)
+simulate_absel(Mux)
