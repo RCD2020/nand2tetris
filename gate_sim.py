@@ -3,7 +3,7 @@ def simulate_function(func):
     print('|---|---|-----|')
     for x in range(0,2):
         for y in range(0,2):
-            print(f'| {x} | {y} |  {func(x,y)}  |')
+            print(f'| {x} | {y} |  {int(func(x,y))}  |')
 
 
 if __name__ == '__main__':
