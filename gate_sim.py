@@ -17,5 +17,14 @@ def simulate_absel(func):
                 )
 
 
+def simulate_insel(func):
+    print('| in | sel || a | b |')
+    print('|----|-----||---|---|')
+    for sel in range(0,2):
+        for gate_in in range(0,2):
+            a, b = func(gate_in, sel)
+            print(f'| {gate_in}  |  {sel}  || {int(a)} | {int(b)} |')
+
+
 if __name__ == '__main__':
     simulate_function(max)
