@@ -4,6 +4,7 @@ from nand import nand
 from Not import Not
 from And import And
 from Xor import Xor
+from Or import Or
 
 
-simulate_function(Xor)
+simulate_function(Or)
