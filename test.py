@@ -7,8 +7,10 @@ from Xor import Xor
 from Or import Or
 from Mux import Mux
 from DMux import DMux
+from NotN import NotN
 
 
 # simulate_function(Xor)
 # simulate_absel(Mux)
-simulate_insel(DMux)
+# simulate_insel(DMux)
+simulate_multibit(NotN)
