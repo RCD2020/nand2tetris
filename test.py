@@ -14,4 +14,4 @@ from AndN import AndN
 # simulate_function(Xor)
 # simulate_absel(Mux)
 # simulate_insel(DMux)
-simulate_multibit(AndN)
+simulate_multibit(NotN, 8)

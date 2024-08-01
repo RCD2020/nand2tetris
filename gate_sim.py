@@ -1,5 +1,7 @@
 from multibit_repr import generate_multi, multi2str
 
+from typing import List
+
 
 def simulate_function(func):
     print('| a | b | out |')
@@ -29,15 +31,33 @@ def simulate_insel(func):
             print(f'| {gate_in}  |  {sel}  || {int(a)} | {int(b)} |')
 
 
-def simulate_multibit(func):
-    multibits = generate_multi(2)
+def simulate_multibit(func, bit_length=2):
 
-    print('| a  | b  | out |')
-    print('|----|----|-----|')
+    def space_text(text, length, minimum, space):
+        length = max(minimum, length)
+        length -= len(text)
+        half = length // 2
+        return f'{space*(half + length % 2)}{text}{space*half}'
+    
+    def line(text: List[str], length, minimum=5, space=' '):
+        string = '|'
+        for x in text:
+            string += space_text(x, length, minimum, space)
+            string += '|'
+        
+        return string
+
+    multibits = generate_multi(bit_length)
+
+    length = bit_length + 2
+
+    print(line(['a','b','out'], length))
+    print(line(['']*3, length, space='-'))
     for a in multibits:
-        for b in generate_multi(2):
-            print(f'| {multi2str(a)} | {multi2str(b)} '
-                + f'| {multi2str(func(a ,b))}  |')
+        for b in generate_multi(bit_length):
+            print(line([
+                multi2str(a), multi2str(b), multi2str(func(a ,b))
+            ], length))
 
 
 if __name__ == '__main__':
