@@ -7,6 +7,7 @@ from Xor import Xor
 from Or import Or
 from Mux import Mux
 from DMux import DMux
+from NandN import NandN
 from NotN import NotN
 from AndN import AndN
 
@@ -14,4 +15,4 @@ from AndN import AndN
 # simulate_function(Xor)
 # simulate_absel(Mux)
 # simulate_insel(DMux)
-simulate_multibit(NotN, 8)
+simulate_multibit(NandN, 2)
