@@ -31,21 +31,23 @@ def simulate_insel(func):
             print(f'| {gate_in}  |  {sel}  || {int(a)} | {int(b)} |')
 
 
-def simulate_multibit(func, bit_length=2):
+def space_text(text, length, minimum, space):
+    length = max(minimum, length)
+    length -= len(text)
+    half = length // 2
+    return f'{space*half}{text}{space*(half + length % 2)}'
 
-    def space_text(text, length, minimum, space):
-        length = max(minimum, length)
-        length -= len(text)
-        half = length // 2
-        return f'{space*(half + length % 2)}{text}{space*half}'
+
+def line(text: List[str], length, minimum=5, space=' '):
+    string = '|'
+    for x in text:
+        string += space_text(x, length, minimum, space)
+        string += '|'
     
-    def line(text: List[str], length, minimum=5, space=' '):
-        string = '|'
-        for x in text:
-            string += space_text(x, length, minimum, space)
-            string += '|'
-        
-        return string
+    return string
+
+
+def simulate_multibit(func, bit_length=2):
 
     multibits = generate_multi(bit_length)
 
@@ -58,6 +60,23 @@ def simulate_multibit(func, bit_length=2):
             print(line([
                 multi2str(a), multi2str(b), multi2str(func(a ,b))
             ], length))
+
+
+def simulate_multi_absel(func, bit_length):
+
+    multibits = generate_multi(bit_length)
+
+    length = bit_length + 2
+
+    print(line(['a','b','sel','out'], length))
+    print(line(['']*4, length, space='-'))
+    for a in multibits:
+        for b in generate_multi(bit_length):
+            for sel in range(2):
+                print(line([
+                    multi2str(a), multi2str(b),
+                    str(sel), multi2str(func(a,b,sel))
+                ], length))
 
 
 if __name__ == '__main__':
