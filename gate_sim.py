@@ -25,8 +25,8 @@ def simulate_absel(func):
 def simulate_insel(func):
     print('| in | sel || a | b |')
     print('|----|-----||---|---|')
-    for sel in range(0,2):
-        for gate_in in range(0,2):
+    for sel in range(2):
+        for gate_in in range(2):
             a, b = func(gate_in, sel)
             print(f'| {gate_in}  |  {sel}  || {int(a)} | {int(b)} |')
 
@@ -40,13 +40,13 @@ def space_text(text, length: int, minimum: int, space):
 
 def line(
         text: List[str], length: List[int],
-        minimum: List[int], space=' '
+        minimum: List[int], space=' ', divider=[]
     ):
 
     string = '|'
     for i in range(len(text)):
         string += space_text(text[i], length[i], minimum[i], space)
-        string += '|'
+        string += '||' if i in divider else '|'
     
     return string
 
@@ -98,6 +98,28 @@ def simulate_multi_absel(func, bit_length):
                     str(sel), multi2str(func(a,b,sel))
                 ], length, mins))
 
+
+def simulate_multi_insel(func, bit_length):
+
+    multibits = generate_multi(bit_length)
+
+    length = [bit_length + 2] * 4
+    length[1] = 1
+
+    headers = ['in', 'sel', 'a', 'b']
+    mins = min_gen(headers)
+    divider = [1]
+
+    print(line(headers, length, mins, divider=divider))
+    print(line(['']*4, length, mins, space='-', divider=divider))
+    for gate_in in multibits:
+        for sel in range(2):
+            a, b = func(gate_in, sel)
+            print(line([
+                multi2str(gate_in), str(sel),
+                multi2str(a), multi2str(b)
+            ], length, mins, divider=divider))
+        
 
 if __name__ == '__main__':
     simulate_function(max)
