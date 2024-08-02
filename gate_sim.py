@@ -31,52 +31,72 @@ def simulate_insel(func):
             print(f'| {gate_in}  |  {sel}  || {int(a)} | {int(b)} |')
 
 
-def space_text(text, length, minimum, space):
+def space_text(text, length: int, minimum: int, space):
     length = max(minimum, length)
     length -= len(text)
     half = length // 2
     return f'{space*half}{text}{space*(half + length % 2)}'
 
 
-def line(text: List[str], length, minimum=5, space=' '):
+def line(
+        text: List[str], length: List[int],
+        minimum: List[int], space=' '
+    ):
+
     string = '|'
-    for x in text:
-        string += space_text(x, length, minimum, space)
+    for i in range(len(text)):
+        string += space_text(text[i], length[i], minimum[i], space)
         string += '|'
     
     return string
+
+
+def min_gen(headers: List[str]):
+    mins = []
+
+    for x in headers:
+        mins.append(len(x) + 2)
+
+    return mins
 
 
 def simulate_multibit(func, bit_length=2):
 
     multibits = generate_multi(bit_length)
 
-    length = bit_length + 2
+    length = [bit_length + 2]*3
 
-    print(line(['a','b','out'], length))
-    print(line(['']*3, length, space='-'))
+    headers = ['a','b','out']
+    mins = min_gen(headers)
+
+    print(line(headers, length, mins))
+    print(line(['']*3, length, mins, space='-'))
     for a in multibits:
         for b in generate_multi(bit_length):
             print(line([
                 multi2str(a), multi2str(b), multi2str(func(a ,b))
-            ], length))
+            ], length, mins))
 
 
 def simulate_multi_absel(func, bit_length):
 
     multibits = generate_multi(bit_length)
 
-    length = bit_length + 2
+    length = [bit_length + 2] * 4
+    length[2] = 1
 
-    print(line(['a','b','sel','out'], length))
-    print(line(['']*4, length, space='-'))
+    headers = ['a','b','sel','out']
+    mins = min_gen(headers)
+
+    print(line(headers, length, mins))
+    print(line(['']*4, length, mins, space='-'))
     for a in multibits:
         for b in generate_multi(bit_length):
             for sel in range(2):
                 print(line([
                     multi2str(a), multi2str(b),
                     str(sel), multi2str(func(a,b,sel))
-                ], length))
+                ], length, mins))
 
 
 if __name__ == '__main__':
