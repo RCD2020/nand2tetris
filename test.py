@@ -11,9 +11,10 @@ from NandN import NandN
 from NotN import NotN
 from AndN import AndN
 from XorN import XorN
+from OrN import OrN
 
 
 # simulate_function(Xor)
 # simulate_absel(Mux)
 # simulate_insel(DMux)
-simulate_multibit(XorN, 2)
+simulate_multibit(OrN, 2)
